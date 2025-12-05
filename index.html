@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of a Creative Developer">
+    <title>My Portfolio</title>
+    <style>
+        /* =========================================
+           1. CSS VARIABLES & RESET
+           ========================================= */
+        :root {
+            /* Light Theme (Default) */
+            --bg-color: #f4f4f9;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --primary-color: #3b82f6; /* Blue */
+            --accent-color: #2563eb;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme Variables */
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --card-bg: #2d2d2d;
+            --primary-color: #60a5fa;
+            --accent-color: #93c5fd;
+            --nav-bg: rgba(26, 26, 26, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* =========================================
+           2. NAVIGATION & HEADER
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            padding: 1rem 5%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        /* Underline effect */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-left: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* =========================================
+           3. SECTIONS (General)
+           ========================================= */
+        section {
+            padding: 80px 5%;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        /* =========================================
+           4. HERO SECTION
+           ========================================= */
+        #home {
+            text-align: center;
+            padding-top: 120px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+
+        .typewriter {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
+           5. ABOUT SECTION
+           ========================================= */
+        .about-container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .about-img {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Placeholder image style */
+        .about-img div {
+            width: 100%;
+            height: 300px;
+            background-color: #ddd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .skills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background-color: var(--card-bg);
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+        }
+
+        /* =========================================
+           6. PROJECTS SECTION (Grid)
+           ========================================= */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-img-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .project-info p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* =========================================
+           7. CONTACT SECTION & FORM
+           ========================================= */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        /* =========================================
+           8. FOOTER & UTILITIES
+           ========================================= */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--nav-bg);
+            margin-top: 2rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            border: none;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* =========================================
+           9. MOBILE RESPONSIVENESS
+           ========================================= */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: var(--nav-bg);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .about-container {
+                flex-direction: column;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">Alex.Dev</a>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">About Me</a></li>
+                <li><a href="#projects" class="nav-item">Projects</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
+                <li><button class="theme-toggle" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="hero-content">
+            <h1>Hi, I'm Alex</h1>
+            <p>I am a <span class="typewriter" id="typewriter-text"></span><span class="cursor">|</span></p>
+            <a href="#projects" class="btn">View My Work</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-container">
+            <div class="about-img">
+                <!-- Replace with actual <img> tag -->
+                <div role="img" aria-label="Profile Picture Placeholder">Profile Photo</div>
+            </div>
+            <div class="about-text">
+                <p>I am a passionate student developer focusing on web technologies. I love solving problems and turning ideas into reality through code. When I'm not coding, I'm exploring new tech trends.</p>
+                <br>
+                <h3>My Skills</h3>
+                <div class="skills">
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">UI Design</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">My Projects</h2>
+        <div class="project-grid">
+            <!-- Project 1 -->
+            <article class="project-card">
+                <div class="project-img-placeholder" role="img" aria-label="Project 1 Preview">Project Image 1</div>
+                <div class="project-info">
+                    <h3>Weather Dashboard</h3>
+                    <p>A responsive web app that displays current weather data using a public API. Features include city search and 5-day forecast.</p>
+                    <a href="#" class="btn">View Live</a>
+                </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-card">
+                <div class="project-img-placeholder" role="img" aria-label="Project 2 Preview">Project Image 2</div>
+                <div class="project-info">
+                    <h3>Task Manager</h3>
+                    <p>A simple to-do list application built with JavaScript. Users can add, delete, and mark tasks as complete. Uses LocalStorage.</p>
+                    <a href="#" class="btn">View Live</a>
+                </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project-card">
+                <div class="project-img-placeholder" role="img" aria-label="Project 3 Preview">Project Image 3</div>
+                <div class="project-info">
+                    <h3>Portfolio Site</h3>
+                    <p>The website you are looking at right now! Designed to showcase my skills using semantic HTML and modern CSS.</p>
+                    <a href="#" class="btn">View Live</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-container">
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="How can I help you?"></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+            <div class="social-links">
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="year"></span> Alex Doe. All rights reserved.</p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to Top">↑</button>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // FEATURE 1: Theme Toggle (Dark/Light Mode)
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Check local storage for saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                body.setAttribute('data-theme', savedTheme);
+                themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (body.getAttribute('data-theme') === 'dark') {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '🌙';
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☀️';
+                }
+            });
+
+            // FEATURE 2: Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close menu when a link is clicked
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // FEATURE 3: Typewriter Effect
+            const textElement = document.getElementById('typewriter-text');
+            const phrases = ["Web Developer", "UI Designer", "Student", "Problem Solver"];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentPhrase = phrases[phraseIndex];
+                
+                if (isDeleting) {
+                    textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    isDeleting = true;
+                    setTimeout(type, 2000); // Pause at end
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    setTimeout(type, 500); // Pause before new word
+                } else {
+                    const speed = isDeleting ? 100 : 200;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+
+            // FEATURE 4: Dynamic Year in Footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // FEATURE 5: Back to Top Button & Active Link Highlighter (Scroll Spy)
+            const backToTopBtn = document.getElementById('backToTop');
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                // Back to Top visibility
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+
+                // Scroll Spy Logic
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href').includes(current)) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // FEATURE 6: Smooth Scroll for Back To Top
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // FEATURE 7: Form Validation (Frontend only)
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+
+                if(name && email && message) {
+                    alert(`Thanks, ${name}! Your message has been sent (Simulated).`);
+                    contactForm.reset();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
